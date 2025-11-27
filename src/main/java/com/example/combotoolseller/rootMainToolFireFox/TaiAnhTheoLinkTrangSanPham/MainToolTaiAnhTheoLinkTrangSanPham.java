@@ -54,30 +54,12 @@ public class MainToolTaiAnhTheoLinkTrangSanPham extends BaseAll {
                     int end = Integer.parseInt(limitQuantity);
                     int step = 20;
 
-//                    System.out.println(i + "-" + rangeEnd);
-//                    System.out.println("🔹 Đang xử lý: " + link+"?start="+i+"&sz="+rangeEnd);
                     driver.navigate().to(link+"?start="+start+"&sz="+end);
                     Thread.sleep(5000);
                     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Đợi tối đa 10 giây
                     wait.until((WebDriver d) -> ((JavascriptExecutor) d).executeScript("return document.readyState").equals("complete"));
                     Thread.sleep(3000);
                     getWebTool(link+"?start="+start+"&sz="+end,"taiAnhTheoLinkTrangSanPham",driver,outputFolder,0,null,limitQuantity);
-//                    for (int i = start; i < end; i += step) {
-//                        int rangeEnd = i + step - 1;
-//                        // Đảm bảo range không vượt quá 100
-//                        if (rangeEnd > end) {
-//                            rangeEnd = end;
-//                        }
-//                        System.out.println(i + "-" + rangeEnd);
-//                        System.out.println("🔹 Đang xử lý: " + link+"?start="+i+"&sz="+rangeEnd);
-//                        String outputFolder = new File("./Output/ToolTaiAnhTheoLinkTrangSanPham/" + folderSave).getAbsolutePath();
-//                        driver.navigate().to(link+"?start="+i+"&sz="+rangeEnd);
-//                        Thread.sleep(5000);
-//                        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Đợi tối đa 10 giây
-//                        wait.until((WebDriver d) -> ((JavascriptExecutor) d).executeScript("return document.readyState").equals("complete"));
-//                        Thread.sleep(3000);
-//                        getWebTool(link+"?start="+i+"&sz="+rangeEnd,"taiAnhTheoLinkTrangSanPham",driver,outputFolder,0,null,limitQuantity);
-//                    }
                 } else {
                     System.out.println("🔹 Đang xử lý: " + link);
                     driver.navigate().to(link);

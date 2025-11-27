@@ -88,9 +88,6 @@ public class HottopicImplement extends BaseAll implements HottopicService {
         int checkQuantityCard = 0;
         System.out.println("limit: "+limit);
         while (checkQuantityCard < 10) {
-//            for(int i = 0; i < 6; i++) {
-//                scrollDownByPixels(driver,2500);
-//            }
             Document docLinkProduct = Jsoup.parse(driver.getPageSource());
             Elements productLinks = docLinkProduct.select("div.row.product-grid div.product div.product-tile div.image-container a.pdpLink");
             List<String> listLink = getListLinkProductComponent(productLinks,"https://www.hottopic.com");
@@ -116,32 +113,6 @@ public class HottopicImplement extends BaseAll implements HottopicService {
             if (uniqueLinks.size() == Integer.parseInt(limit)) {
                 break;
             }
-
-//            boolean checkClickNext = clickNextPage(driver,"div.row.product-grid div.col-12.grid-footer div.pagination-wrapper div.pagination.clearfix.show-more.p-0 ul.paginationList li.first-last.next-container a.page-next.pagination-arrow[aria-label='Next']");
-//            if(checkClickNext == false) {
-//                try {
-////                    ((JavascriptExecutor) driver).executeScript(
-////                            "var css='.details.d-lg-block.px-lg-2{pointer-events:none!important;opacity:0!important;visibility:hidden!important}';" +
-////                                    "var s=document.createElement('style');s.type='text/css';s.appendChild(document.createTextNode(css));" +
-////                                    "document.head.appendChild(s);"
-////                    );
-//
-//                    JavascriptExecutor js = (JavascriptExecutor) driver;
-//                    js.executeScript("var el = document.getElementById('clockdiv'); if (el) el.style.display = 'none';");
-//
-//                    Thread.sleep(2000);
-//                    checkClickNext = clickNextPage(driver,"div.row.product-grid div.col-12.grid-footer div.pagination-wrapper div.pagination.clearfix.show-more.p-0 ul.paginationList li.first-last.next-container a.page-next.pagination-arrow[aria-label='Next']");
-//                    if(checkClickNext == false) {
-                        break;
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    break;
-//                }
-//            } else {
-//                quantityLinkMax = 0;
-//                checkQuantityCard = 0;
-//            }
         }
 
         List<String> listLink = new ArrayList<>(uniqueLinks);

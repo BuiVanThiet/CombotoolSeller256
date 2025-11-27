@@ -33,3 +33,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore all .exe files
+*.exe
+
+# Ignore output folder
+output/

@@ -76,4 +76,9 @@ public class RhobackImplement extends BaseAll implements RhobackService {
         }
         return "True";
     }
+
+    @Override
+    public String getLinkProductByPage(WebDriver driver, String baseFolder, String limit) {
+        return null;
+    }
 }

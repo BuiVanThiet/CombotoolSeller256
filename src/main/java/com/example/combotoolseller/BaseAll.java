@@ -12,10 +12,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -31,6 +29,7 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
+import java.util.NoSuchElementException;
 
 public class BaseAll {
     protected static TikTokService tikTokService = new TikTokImplement();
@@ -78,6 +77,17 @@ public class BaseAll {
     protected static BogeystarsService bogeystarsService = new BogeystarsImplement();
     protected static HottopicService hottopicService = new HottopicImplement();
     protected static PinsandacesService pinsandacesService = new PinsandacesImplement();
+
+    protected static FiercepulseService fiercepulseService = new FiercepulseImplement();
+    protected static GreazyteesService greazyteesService = new GreazyteesImplement();
+    protected static BlntsService blntsService = new BlntsImplement();
+
+    protected static SwagteeshirtService swagteeshirtService = new SwagteeshirtImplement();
+    protected static BoxlunchService boxlunchService = new BoxlunchImplement();
+    protected static OrnamentallyyouService ornamentallyyouService = new OrnamentallyyouImplement();
+    protected static GrishkoService grishkoService = new GrishkoImplement();
+    protected static WalmartService walmartService = new WalmartImplement();
+    protected static PrintervalService printervalService = new PrintervalImplement();
 
     protected static Set<String> uniqueLinks = new HashSet<>();  // Dùng HashSet để loại bỏ trùng lặp
 //    public static String getNameProduct(WebDriver driver, String elementNameProduct) {
@@ -154,7 +164,14 @@ public class BaseAll {
         // Làm sạch URL nếu cần (hoặc nếu bạn muốn thực hiện hành động với URL)
         nameProduct = cleanURL(nameProduct);
 
-        return clearExtraSpaces(nameProduct);
+        return stripTrailingDotsSpacesForPathSegment(clearExtraSpaces(nameProduct));
+    }
+
+    public static String stripTrailingDotsSpacesForPathSegment(String s) {
+        if (s == null) return "";
+        // xóa hết khoảng trắng + dấu chấm ở cuối
+        s = s.replaceAll("[\\s\\.]+$", "");
+        return s.isEmpty() ? "untitled" : s;
     }
 
     // Làm sạch tên sản phẩm để sử dụng cho tên file (thay thế các ký tự không hợp lệ)
@@ -378,16 +395,36 @@ public class BaseAll {
     }
 
     public static boolean getClickAction(WebDriver driver,String elementClick) {
+//        System.out.println(elementClick);
+//        try {
+//            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//            WebElement modal = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(elementClick)));
+//            System.out.println("✅ Modal found in DOM");
+//
+//            if (modal.isDisplayed()) {
+//                System.out.println("✅ Modal is visible");
+//                modal.click();
+//                Thread.sleep(2500);
+//                return true;
+//            } else {
+//                System.out.println("⚠️ Modal not visible");
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            System.out.println("❌ Modal not found or not clickable: " + e.getMessage());
+//            return false;
+//        }
         System.out.println(elementClick);
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            // Tạo WebDriverWait để chờ phần tử
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));  // Chờ tối đa 10 giây
             WebElement modal = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(elementClick)));
             System.out.println("✅ Modal found in DOM");
 
             if (modal.isDisplayed()) {
                 System.out.println("✅ Modal is visible");
-                modal.click();
-                Thread.sleep(2500);
+                modal.click();  // Click vào phần tử modal
+                Thread.sleep(2500);  // Đợi 2.5 giây
                 return true;
             } else {
                 System.out.println("⚠️ Modal not visible");
@@ -425,7 +462,6 @@ public class BaseAll {
 
     public static boolean clickNextPage(WebDriver driver, String element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
         try {
             WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(element)));
 
@@ -1022,6 +1058,56 @@ public class BaseAll {
                 } else if (nameTool.equals("taiAnhTheoLinkTrangSanPham")){
                     resul = pinsandacesService.getLinkProductByPage(driver,link,limit);
                 }
+            } else if (link.toLowerCase().contains("fiercepulse")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = fiercepulseService.getDowloadImage(driver,link,outputFolder,index,limit);
+                } else if (nameTool.equals("taiAnhTheoLinkTrangSanPham")){
+                    resul = fiercepulseService.getLinkProductByPage(driver,link,limit);
+                }
+            } else if (link.toLowerCase().contains("blnts")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = blntsService.getDowloadImage(driver,link,outputFolder,index,limit);
+                } else if (nameTool.equals("taiAnhTheoLinkTrangSanPham")){
+                    resul = blntsService.getLinkProductByPage(driver,link,limit);
+                }
+            } else if (link.toLowerCase().contains("greazytees")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = greazyteesService.getDowloadImage(driver,link,outputFolder,index,limit);
+                } else if (nameTool.equals("taiAnhTheoLinkTrangSanPham")){
+                    resul = greazyteesService.getLinkProductByPage(driver,link,limit);
+                }
+            } else if (link.toLowerCase().contains("swagteeshirt")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = swagteeshirtService.getDowloadImage(driver,link,outputFolder,index,limit);
+                } else if (nameTool.equals("taiAnhTheoLinkTrangSanPham")){
+                    resul = swagteeshirtService.getLinkProductByPage(driver,link,limit);
+                }
+            } else if (link.toLowerCase().contains("boxlunch")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = boxlunchService.getDowloadImage(driver,link,outputFolder,index,limit);
+                } else if (nameTool.equals("taiAnhTheoLinkTrangSanPham")){
+                    resul = boxlunchService.getLinkProductByPage(driver,link,limit);
+                }
+            } else if (link.toLowerCase().contains("ornamentallyyou")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = ornamentallyyouService.getDowloadImage(driver,link,outputFolder,index,limit);
+                } else if (nameTool.equals("taiAnhTheoLinkTrangSanPham")){
+                    resul = ornamentallyyouService.getLinkProductByPage(driver,link,limit);
+                }
+            } else if (link.toLowerCase().contains("grishko")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = grishkoService.getDowloadImage(driver,link,outputFolder,index,limit);
+                } else if (nameTool.equals("taiAnhTheoLinkTrangSanPham")){
+                    resul = grishkoService.getLinkProductByPage(driver,link,limit);
+                }
+            } else if (link.toLowerCase().contains("walmart")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = walmartService.getDowloadImage(driver,link,outputFolder,index,limit);
+                }
+            } else if (link.toLowerCase().contains("printerval")) {
+                if (nameTool.equals("taiAnhTheoLinkSanPhamKhongMau")) {
+                    resul = printervalService.getDowloadImage(driver,link,outputFolder,index,limit);
+                }
             } else {
                 System.out.println("Ko co bo service");
                 resul = "False";
@@ -1079,6 +1165,84 @@ public class BaseAll {
             }
         });
     }
+    //luot tu tu xuong fotter
+    public void scrollToFooterSlowly(WebDriver driver) {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
 
+            long lastHeight = (long) js.executeScript("return document.body.scrollHeight");
+            long currentPosition = 0;
+            int step = 300; // số pixel mỗi lần cuộn
+            int delay = 500; // thời gian nghỉ giữa các lần (ms)
+            System.out.println("Đang lướt");
+            while (currentPosition < lastHeight) {
+                currentPosition += step;
+                js.executeScript("window.scrollTo(0, arguments[0]);", currentPosition);
+                Thread.sleep(delay);
+
+                long newHeight = (long) js.executeScript("return document.body.scrollHeight");
+                if (newHeight != lastHeight) {
+                    lastHeight = newHeight; // trang có thể load thêm nội dung (lazy load)
+                } else if (currentPosition >= lastHeight) {
+                    break; // đã tới cuối trang
+                }
+            }
+
+            // Đảm bảo cuộn hẳn xuống footer
+            js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println("Scrolling interrupted: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error during scrolling: " + e.getMessage());
+        }
+    }
+
+    public void scrollToElementSlowly(WebDriver driver, String cssSelector) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        int step = 400;   // khoảng cách mỗi lần cuộn (pixel)
+        int delay = 700;  // thời gian nghỉ mỗi lần (ms)
+        int maxScroll = 50; // tối đa 50 lần cuộn để tránh vòng lặp vô tận
+
+        for (int i = 0; i < maxScroll; i++) {
+            try {
+                WebElement element = driver.findElement(By.cssSelector(cssSelector));
+
+                // Kiểm tra phần tử đã hiện trong viewport chưa
+                boolean inViewport = (Boolean) js.executeScript(
+                        "var elem = arguments[0];" +
+                                "var rect = elem.getBoundingClientRect();" +
+                                "return (" +
+                                "rect.top >= 0 && rect.top <= window.innerHeight);",
+                        element
+                );
+
+                if (inViewport) {
+                    System.out.println("✅ Đã cuộn đến phần tử: " + cssSelector);
+                    try {
+                        Thread.sleep(3000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+            } catch (NoSuchElementException e) {
+                // phần tử chưa xuất hiện, tiếp tục cuộn
+            }
+
+            // Cuộn thêm một đoạn
+            js.executeScript("window.scrollBy(0, arguments[0]);", step);
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Scrolling interrupted");
+                return;
+            }
+        }
+
+        System.out.println("⚠️ Không tìm thấy phần tử sau khi cuộn: " + cssSelector);
+    }
 
 }

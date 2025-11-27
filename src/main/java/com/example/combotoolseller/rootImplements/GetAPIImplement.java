@@ -21,6 +21,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class GetAPIImplement extends BaseAll implements GetAPIService {
+    String hostRoot = "https://mason-unmournful-tracelessly.ngrok-free.dev";
     @Override
     public List<TableKey> getAllKey() {
         try {
@@ -30,7 +31,7 @@ public class GetAPIImplement extends BaseAll implements GetAPIService {
                     .build();
 
             // Tạo yêu cầu HTTP GET
-            String url = "http://oarfish-awake-roughy.ngrok-free.app/256-green-color-api/get-key-v3";
+            String url = hostRoot+"/256-green-color-api/get-key-v3";
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .build();
@@ -73,7 +74,7 @@ public class GetAPIImplement extends BaseAll implements GetAPIService {
                     .build();
 
             // Tạo yêu cầu HTTP GET
-            String url = "http://oarfish-awake-roughy.ngrok-free.app/256-green-color-api/get-ip-success";
+            String url = hostRoot+"/256-green-color-api/get-ip-success";
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .build();
@@ -116,7 +117,7 @@ public class GetAPIImplement extends BaseAll implements GetAPIService {
                     .build();
 
             // Tạo yêu cầu HTTP GET
-            String url = "http://oarfish-awake-roughy.ngrok-free.app/256-green-color-api/get-all-ip-login";
+            String url = hostRoot+"/256-green-color-api/get-all-ip-login";
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .build();
@@ -159,7 +160,7 @@ public class GetAPIImplement extends BaseAll implements GetAPIService {
                     .build();
 
             // Tạo yêu cầu HTTP GET
-            String url = "http://oarfish-awake-roughy.ngrok-free.app/256-green-color-api/get-all-ip-device";
+            String url = hostRoot+"/256-green-color-api/get-all-ip-device";
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .build();
@@ -202,7 +203,7 @@ public class GetAPIImplement extends BaseAll implements GetAPIService {
                     .build();
 
             // Tạo yêu cầu HTTP GET
-            String url = "http://oarfish-awake-roughy.ngrok-free.app/256-green-color-api/add-ip-login";
+            String url = hostRoot+"/256-green-color-api/add-ip-login";
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .build();

@@ -42,7 +42,7 @@ public class TikTokImplement extends BaseAll implements TikTokService {
             return "False";
         }
 
-        boolean checkCloneSale = getClickAction(driver,"div.closeIcon-e5coac svg");
+        boolean checkCloneSale = getClickAction(driver,"div.tux-web-canary div[class^='closeIcon-'] svg");
         if(checkCloneSale == false) {
             System.out.println("Khong co nut sale!");
         }
@@ -116,13 +116,16 @@ public class TikTokImplement extends BaseAll implements TikTokService {
             return "False";
         }
         String nameProduct = getNameProduct(driver,"h1");
+        if (nameProduct == null) {
+            nameProduct = getNameProduct(driver,"div.mx-16 h1");
+        }
         System.out.println("name: "+nameProduct);
 
         if (getCheckSecurity(driver) == false) {
             return "False";
         }
 
-        boolean checkCloneSale = getClickAction(driver,"div.closeIcon-e5coac svg");
+        boolean checkCloneSale = getClickAction(driver,"div.tux-web-canary div[class^='closeIcon-'] svg");
         if(checkCloneSale == false) {
             System.out.println("Khong co nut sale!");
         }
@@ -176,8 +179,17 @@ public class TikTokImplement extends BaseAll implements TikTokService {
         if (getCheckSecurity(driver) == false) {
             return "False";
         }
+        Thread.sleep(2000);
+        boolean checkCloneSecurity = getClickAction(driver,"div.captcha_verify_bar div.captcha_verify_bar--close a.verify-bar-close");
+        if(checkCloneSecurity == false) {
+            System.out.println("Khong co nut Security!");
+        }
 
-        Thread.sleep(1000);
+        boolean checkCloneSpin = getClickAction(driver,"div[class^='closeIcon-'] svg");
+        if(checkCloneSpin == false) {
+            System.out.println("Khong co nut Spin!");
+        }
+        Thread.sleep(2000);
         List<WebElement> elements = driver.findElements(By.cssSelector("div.mx-16 div.itemContainer-y229Va div.firstLineContainer-jKMRis"));
         if (!elements.isEmpty()) {
             elements.get(0).click();  // phần tử đầu tiên

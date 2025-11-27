@@ -23,10 +23,10 @@ public class MainTaiAnhChonVersion extends BaseAll {
         try {
             for (Map<String, String> row : excelData) {
                 String link = row.get("Column 1").trim();
-                if(link.toLowerCase().contains("tiktok")) {
-                    int randomNumber = ThreadLocalRandom.current().nextInt(1, 1000);
-                    link = link+"?_svg="+randomNumber+"&utm_source=copy";
+                if (link == null) {
+                    return;
                 }
+
                 String folderSave;
                 if (row.get("Column 2") == null) {
                     folderSave = "";
@@ -56,6 +56,31 @@ public class MainTaiAnhChonVersion extends BaseAll {
                     }
                 }
                 driver.navigate().to(link);
+//                if(link.toLowerCase().contains("tiktok") && driver.getTitle().equals("Security Check")) {
+////                    int randomNumber = ThreadLocalRandom.current().nextInt(1, 1000);
+////                    link = link+"?_svg="+randomNumber+"&utm_source=copy";
+//                    String Url = driver.getCurrentUrl();
+//                    link = Url.split("\\?")[0];
+//                    Integer randomNumber = ThreadLocalRandom.current().nextInt(100000, 1000000);
+//                    link = link+"?_svg="+randomNumber+"&utm_source=copy#video-close";
+////                    link = link + "?_svg=1231234344234234234&utm_source=copy#video-close";
+//                    link = link.replace("www","shop");
+//                    System.out.println("vung tt: "+link);
+//                    driver.navigate().to(link);
+//                    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Đợi tối đa 10 giây
+//                    wait.until((WebDriver d) -> ((JavascriptExecutor) d)
+//                            .executeScript("return document.readyState").equals("complete"));
+//                    if (driver.getTitle().equals("Security Check")) {
+//                        System.out.println("da vao vung doi link");
+//                        Url = driver.getCurrentUrl();
+//                        link = Url.split("\\?")[0];
+//                        System.out.println("lay dc link: "+link);
+//                        randomNumber = ThreadLocalRandom.current().nextInt(100000, 1000000);
+//                        link = link+"?_svg="+randomNumber+"&utm_source=copy#video-close";
+//                        System.out.println("link vung doi: "+link);
+//                        driver.get(link);
+//                    }
+//                }
 
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Đợi tối đa 10 giây
                 wait.until((WebDriver d) -> ((JavascriptExecutor) d)

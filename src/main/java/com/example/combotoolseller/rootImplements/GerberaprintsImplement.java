@@ -22,7 +22,7 @@ import java.util.List;
 public class GerberaprintsImplement extends BaseAll implements GerberaprintsService {
     @Override
     public String getDowloadImage(WebDriver driver, String linkRoot, String baseFolder, int index, String limit) throws IOException, InterruptedException {
-        String nameProduct = getNameProduct(driver,"h1.t4s-product__title");
+        String nameProduct = getNameProduct(driver,"h1.h2");
         Thread.sleep(2000);
         if(nameProduct == null) {
             boolean shouldContinue = showProblemDialog();
@@ -34,8 +34,8 @@ public class GerberaprintsImplement extends BaseAll implements GerberaprintsServ
             // Đợi cho đến khi trang hoàn tất load (tùy thuộc vào yếu tố bạn cần kiểm tra)
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             // Ví dụ: đợi cho đến khi một element cụ thể xuất hiện trên trang (có thể là một element bất kỳ)
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("h1.t4s-product__title")));
-            nameProduct = getNameProduct(driver,"h1.t4s-product__title");
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("h1.h2")));
+            nameProduct = getNameProduct(driver,"h1.h2");
             if (nameProduct == null) {
                 System.out.println("webloi.");
                 return "False";
@@ -53,7 +53,7 @@ public class GerberaprintsImplement extends BaseAll implements GerberaprintsServ
 //            Thread.sleep(2000);
 //        }
 
-        boolean checkCloneSale = getClickAction(driver,"div.t4s-row.t4s-row__product div.t4s-col-md-6 div.t4s-row div.t4s-col-12 div.t4s-pr-group-btns button.t4s-pr__pswp-btn");
+        boolean checkCloneSale = getClickAction(driver,"div.needsclick div.needsclick div.needsclick button[aria-label='Close dialog']");
         if(checkCloneSale == false) {
             System.out.println("Khong co nut!");
         }
@@ -61,7 +61,7 @@ public class GerberaprintsImplement extends BaseAll implements GerberaprintsServ
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         // Đợi cho đến khi modal đóng và hình ảnh trong carousel xuất hiện
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-                By.cssSelector("div.pswp.pswp__t4s div.pswp__thumbnails div.pswp_thumb_item img")
+                By.cssSelector("li button img")
         ));
 
         // Lấy HTML hiện tại của trang đã được cập nhật
@@ -70,9 +70,9 @@ public class GerberaprintsImplement extends BaseAll implements GerberaprintsServ
         // Phân tích HTML bằng Jsoup
         Document docImage = Jsoup.parse(pageSource);
 
-        Elements imgElements = docImage.select("div.pswp.pswp__t4s div.pswp__thumbnails div.pswp_thumb_item img");
+        Elements imgElements = docImage.select("li button img");
         if (imgElements.size() <= 0) {
-            imgElements = docImage.select("div.t4s-row.t4s-row__product div.t4s-col-md-6 div.t4s-row div.t4s-col-12 div.t4s-carousel__nav-scroller div.t4s-row div.t4s-col-item div.t4s_ratio img.lazyautosizes");
+            imgElements = docImage.select("div.product__media.media.media--transparent img.image-magnify-lightbox");
         }
         int startLink = 0;
         for (String url: getListImageComponent(driver,imgElements,"\\?v=.*", "")) {
@@ -113,7 +113,7 @@ public class GerberaprintsImplement extends BaseAll implements GerberaprintsServ
         System.out.println("limit: "+limit);
         while (checkQuantityCard < 10) {
             Document docLinkProduct = Jsoup.parse(driver.getPageSource());
-            Elements productLinks = docLinkProduct.select("h3.t4s-product-title a");
+            Elements productLinks = docLinkProduct.select("h3.card__heading.h5 a");
             List<String> listLink = getListLinkProductComponent(productLinks,"https://gerberaprints.com");
 
             for (String link: listLink) {
@@ -125,7 +125,7 @@ public class GerberaprintsImplement extends BaseAll implements GerberaprintsServ
             }
 
             if(checkCloneModal == false) {
-                boolean checkCloneSale = getClickAction(driver,"button[aria-label='Close dialog']");
+                boolean checkCloneSale = getClickAction(driver,"div.needsclick div.needsclick div.needsclick button[aria-label='Close dialog']");
                 if(checkCloneSale == false) {
                     System.out.println("Khong co nut sale!");
                 } else {
@@ -147,7 +147,7 @@ public class GerberaprintsImplement extends BaseAll implements GerberaprintsServ
                 break;
             }
 
-            boolean checkClickNext = clickNextPage(driver,"li a[aria-label='Next']");
+            boolean checkClickNext = clickNextPage(driver,"li a[aria-label='Next page']");
             if(checkClickNext == false) {
                 break;
             } else {

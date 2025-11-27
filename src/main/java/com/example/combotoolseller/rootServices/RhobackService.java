@@ -6,5 +6,6 @@ import java.io.IOException;
 
 public interface RhobackService {
     String getDowloadImage(WebDriver driver, String linkRoot, String baseFolder, int index,String limit) throws IOException,InterruptedException;
+    String getLinkProductByPage(WebDriver driver, String baseFolder, String limit);
 
 }
